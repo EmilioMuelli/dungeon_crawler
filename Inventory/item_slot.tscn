@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bb37c7bl7b6vv"]
+
+[ext_resource type="Script" path="res://item_slot.gd" id="1_nc6sy"]
+
+[node name="item_slot" type="Panel"]
+offset_right = 32.0
+offset_bottom = 32.0
+script = ExtResource("1_nc6sy")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Item_display" type="Sprite2D" parent="CenterContainer"]
+texture_filter = 1

@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://cselhhxqxxd0x"]
+
+[ext_resource type="Script" path="res://big_chest.gd" id="1_21lw0"]
+[ext_resource type="Texture2D" uid="uid://wtpshnhffows" path="res://art/Pixel Crawler - FREE - 1.8/Environment/Dungeon Prison/Assets/Props.png" id="1_du16v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5dkf5"]
+radius = 36.0139
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ccs1"]
+atlas = ExtResource("1_du16v")
+region = Rect2(96, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_whstk"]
+atlas = ExtResource("1_du16v")
+region = Rect2(128, 192, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_atb1v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ccs1")
+}],
+"loop": true,
+"name": &"close",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whstk")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rjo2p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ulq7q"]
+size = Vector2(30, 20)
+
+[node name="bigChest" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_21lw0")
+
+[node name="openable_area" type="Area2D" parent="."]
+
+[node name="collectable_collision" type="CollisionShape2D" parent="openable_area"]
+shape = SubResource("CircleShape2D_5dkf5")
+
+[node name="open_close" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_atb1v")
+animation = &"close"
+
+[node name="Marker2D" type="Marker2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, 7)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_rjo2p")
+
+[node name="collisions" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_ulq7q")
+
+[connection signal="body_entered" from="openable_area" to="." method="_on_collectable_area_body_entered"]
+[connection signal="body_exited" from="openable_area" to="." method="_on_collectable_area_body_exited"]
